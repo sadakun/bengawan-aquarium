@@ -18,12 +18,13 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'shop'])->name('home');
 #Blog page
 Route::get('/blog', [App\Http\Controllers\HomeController::class, 'blog'])->name('blogs');
-#Post page
-Route::get('/post/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('post');
 
 #ADMIN
 Route::middleware('auth')->group(function()
 {
+    #Post page
+    Route::get('/blog/post/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('post');
+    
     #Dasboard
     Route::get('/admin', [App\Http\Controllers\AdminsController::class, 'index'])->name('admin.index');
     
@@ -62,5 +63,18 @@ Route::middleware('auth')->group(function()
     Route::get('/admin/permissions/{permission}/edit', [App\Http\Controllers\PermissionController::class, 'edit'])->name('permissions.edit');
     Route::put('/admin/permissions/{permission}/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('permissions.update');
     Route::delete('/admin/permissions/{permission}/delete', [App\Http\Controllers\PermissionController::class, 'delete'])->name('permissions.delete');
+
+    #comments
+    Route::get('/admin/comments', [App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+    Route::post('/admin/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+    Route::patch('/admin/comments/{id}/update', [App\Http\Controllers\CommentController::class, 'update'])->name('comments.update.status');
+    Route::delete('/admin/comments/{id}/delete', [App\Http\Controllers\CommentController::class, 'delete'])->name('comments.delete');
+    Route::get('/admin/comments/post/{comment}', [App\Http\Controllers\CommentController::class, 'show'])->name('comments.post.show');
+
+    #replies
+    Route::get('/admin/comments/replies/{reply}', [App\Http\Controllers\CommentReplyController::class, 'show'])->name('comment.replies.show');
+    Route::post('/admin/comments/replies', [App\Http\Controllers\CommentReplyController::class, 'store'])->name('comment.replies.store');
+    Route::patch('/admin/comments/replies/{id}/update', [App\Http\Controllers\CommentReplyController::class, 'update'])->name('replies.update.status');
+    Route::delete('/admin/comments/replies/{id}/delete', [App\Http\Controllers\CommentReplyController::class, 'delete'])->name('comment.reply.delete');
 
 });

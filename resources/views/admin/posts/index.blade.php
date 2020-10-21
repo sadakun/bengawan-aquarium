@@ -50,18 +50,29 @@
                     <tr>
                       <td>{{$post->id}}</td>
                       <td>{{$post->user->name}}</td>
-                      <td><a href="{{route('post.edit', $post->id)}}">{{$post->title}}</a></td>
+                      <td>{{$post->title}}</td>
                       <td><img height="100px" src="{{$post->post_image}}" alt=""></td>
                       <td>{{$post->created_at->diffForHumans()}}</td>
                       <td>{{$post->updated_at->diffForHumans()}}</td>
                       <td>
-                        @can('view', $post)
+                        <a href="{{route('post', $post->id)}}" class="btn btn-circle btn-info btn-sm">
+                          <i class="fas fa-search"></i>
+                        </a>
+
+                        <a href="{{route('comments.post.show', $post->id)}}" class="btn btn-circle btn-primary btn-sm">
+                          <i class="fas fa-comments"></i>
+                        </a>
+
+                        <a href="{{route('post.edit', $post->id)}}" class="btn btn-circle btn-warning btn-sm">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        
                         <form method="post" action="{{route('post.delete', $post->id)}}" ectype="multipart/form-data">
                           @csrf
                           @method('DELETE')
-                          <button type="submit" class="btn btn-danger">Delete</button>
+                          <button type="submit" class="btn btn-circle btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </form>
-                        @endcan
+                        
                       </td>
                     </tr>
                     @endforeach

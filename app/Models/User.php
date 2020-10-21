@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Permission;
+use App\Models\CommentReply;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Models\Role;
 use Illuminate\Support\Str;
 
@@ -53,21 +56,6 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-    
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class);
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
     public function userHasRole($role_name)
     {
         foreach($this->roles as $role)
@@ -88,5 +76,30 @@ class User extends Authenticatable
                 return $value;
             }
         return asset('storage/' . $value);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(CommentReply::class);
     }
 }

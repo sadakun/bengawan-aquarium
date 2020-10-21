@@ -47,16 +47,17 @@
                     @foreach($users as $user)
                     <tr>
                       <td>{{$user->id}}</td>
-                      <td><a href="{{route('user.profile.show',$user)}}">{{$user->username}}</a></td>
+                      <td>{{$user->username}}</td>
                       <td>{{$user->email}}</td>
                       <td><img height="100px" src="{{$user->avatar}}" alt=""></td>
                       <td>{{$user->created_at->diffForHumans()}}</td>
                       <td>{{$user->updated_at->diffForHumans()}}</td>
                       <td>
+                        <a href="{{route('user.profile.show',$user)}}" class="btn btn-circle btn-warning btn-sm"><i class="fas fa-pen"></i></a>
                         <form method="post" action="{{route('user.delete', $user->id)}}" ectype="multipart/form-data">
                           @csrf
                           @method('DELETE')
-                          <button type="submit" class="btn btn-danger">Delete</button>
+                          <button type="submit" class="btn btn-circle btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </form>
                       </td>
                     </tr>

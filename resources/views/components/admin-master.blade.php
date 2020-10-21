@@ -58,6 +58,7 @@
       <x-admin.sidebar.posts></x-admin.sidebar.posts>
       <x-admin.sidebar.users></x-admin.sidebar.users>
       <x-admin.sidebar.authorizations></x-admin.sidebar.authorizations>
+      <x-admin.sidebar.comments></x-admin.sidebar.comments>
       
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">

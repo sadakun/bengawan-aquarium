@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\Session;
 class PostController extends Controller
 {
     #Home Post
-    public function show(Post $post)
+    public function show($id)
     {
-        return view('blog-post', ['post'=>$post]);
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->where('isActive',1)->get();
+        return view('components.blog.blog-post', [
+            'post'=>$post,
+            'comments'=>$comments,
+            ]);
     }
 
     ##Admin Post

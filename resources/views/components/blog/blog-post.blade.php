@@ -41,30 +41,83 @@
 
     <hr>
 
-    <!-- Comments Form -->
+    <!-- Comments Form Input-->
     <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-            <form>
-            <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <form action="{{route('comments.store')}}" method="post">
+            @csrf
+                <input type="hidden" name="post_id" value="{{$post->id}}">
+                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                <div class="form-group">
+                    <textarea name="body" class="form-control @error('body') is-invalid @enderror" rows="3"></textarea>
+                    @error('body')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 
     <!-- Single Comment -->
+    @if(count($comments) > 0)
+    @foreach($comments as $comment)
     <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <img width="80px" class="rounded img-fluid mr-3 d-block" src="{{$comment->user->avatar}}" alt="">
         <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            <h5 class="mt-0">{{$comment->user->username}}</h5>
+            {{$comment->body}}
+
+            @if(count($comment->replies) > 0)
+            @foreach($comment->replies as $reply)
+            <!-- Comment with nested comments -->
+            <div class="media mt-5">
+                <img width="60px" class="rounded img-fluid mr-3 d-block" src="{{$comment->user->avatar}}" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">{{$reply->user->username}}</h5>
+                    {{$reply->body}}
+                </div>
+            </div>
+            
+            @endforeach
+            
+            @else
+            <br>
+            <small class="mt-3"><i>No one replied yet, be the first one to reply</i></small>
+            
+            @endif
+            <form class="form-group" method="post" action="{{route('comment.replies.store')}}">
+                @csrf
+                <div class="input-group mt-3">
+                    <div class="input-group-append">
+                        <button class="btn rounded btn-primary" type="submit">
+                        <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                    <input type="textarea" name="body" class="form-control  border-0 small @error('body') is-invalid @enderror" placeholder="Reply" rows="1">
+                    @error('body')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+            </form>
         </div>
     </div>
+    @endforeach
+    @else
+    <h1>No Comments yet</h1>
+    @endif
 
     <!-- Comment with nested comments -->
-    <div class="media mb-4">
+    
+    <!-- <div class="media mb-4">
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
             <h5 class="mt-0">Commenter Name</h5>
@@ -87,7 +140,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <!-- Pagination -->
     <ul class="pagination justify-content-center mb-4">
@@ -163,4 +216,4 @@
 </div>
     
 @endsection
-</x-blog-master>
+</x-home-master>

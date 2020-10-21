@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Comment;
 use App\Models\User;
+use App\Models\Post;
 
 class Post extends Model
 {
@@ -36,5 +38,10 @@ class Post extends Model
                 return $value;
             }
         return asset('storage/' . $value);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

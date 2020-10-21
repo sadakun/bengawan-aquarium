@@ -58,6 +58,7 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
+        $this->authorize('delete', $user);
         $user->delete();
         session()->flash('user-delete', 'user has beed deleted');
         return back();
