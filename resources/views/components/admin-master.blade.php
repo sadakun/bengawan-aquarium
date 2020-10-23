@@ -18,6 +18,9 @@
   <!-- Custom styles for this template-->
   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+  <!-- summernote plugin css -->
+  <x-summernote-jquery-and-bootstrap></x-summernote-jquery-and-bootstrap>
+  
 </head>
 
 <body id="page-top">
@@ -340,6 +343,9 @@
   <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
   @yield('scripts')
+ <!-- summernote css/js -->
+  <x-summernote-css-and-js></x-summernote-css-and-js>
+
 
 </body>
 

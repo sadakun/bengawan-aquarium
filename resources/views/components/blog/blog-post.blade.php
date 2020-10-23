@@ -26,7 +26,7 @@
     <hr>
 
     <!-- Post Content -->
-    <p class="lead">{{$post->body}}</p>
+    <p class="lead">{!! $post->body !!}</p>
 
     <blockquote class="blockquote">
     <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>

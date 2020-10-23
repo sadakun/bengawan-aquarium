@@ -17,10 +17,12 @@
             </div>
 
             <div class="form-group">
-                <textarea name="body" id="body" class="form-control" cols="30" rows="10"></textarea>
+                <textarea name="body" id="summernote" class="form-control" cols="30" rows="10"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     @endsection
+
+   
 </x-admin-master>
