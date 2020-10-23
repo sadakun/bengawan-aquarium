@@ -55,7 +55,7 @@
                       <td>{{$post->created_at->diffForHumans()}}</td>
                       <td>{{$post->updated_at->diffForHumans()}}</td>
                       <td>
-                        <a href="{{route('post', $post->id)}}" class="btn btn-circle btn-info btn-sm">
+                        <a href="{{route('post', $post->slug)}}" class="btn btn-circle btn-info btn-sm">
                           <i class="fas fa-search"></i>
                         </a>
 

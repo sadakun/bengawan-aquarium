@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Session;
 class PostController extends Controller
 {
     #Home Post
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::findBySlug($slug);
         $comments = $post->comments()->where('isActive',1)->get();
         return view('components.blog.blog-post', [
             'post'=>$post,
