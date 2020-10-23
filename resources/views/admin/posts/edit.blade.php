@@ -22,7 +22,7 @@
             </div>
 
             <div class="form-group">
-                <textarea name="body" id="body" class="form-control" cols="30" rows="10">{{$post->body}}</textarea>
+                <textarea name="body" id="summernote" class="form-control" cols="30" rows="10">{!! $post->body !!}</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
