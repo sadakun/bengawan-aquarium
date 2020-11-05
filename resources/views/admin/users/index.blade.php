@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Users</title>
+    @endsection
 @section('content')
         <h1 class="h3 mb-4 text-gray-800">All Users</h1>
         <!-- option 1 -->
@@ -67,7 +70,7 @@
               </div>
             </div>
         </div>
-        {{$users->links()}}
+        
     @endsection
 
     @section('scripts')
@@ -76,6 +79,6 @@
         <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
         <!-- Page level custom scripts -->
-        <!-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> -->
+        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
     @endsection
 </x-admin-master>

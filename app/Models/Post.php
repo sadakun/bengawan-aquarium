@@ -10,6 +10,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
 
 class Post extends Model
 {
@@ -22,6 +24,7 @@ class Post extends Model
         'post_image',
         'title',
         'body',
+        'category_id',
     ];
 
     public function sluggable()
@@ -57,11 +60,21 @@ class Post extends Model
             {
                 return $value;
             }
-        return asset('storage/' . $value);
+        return asset('' . $value);
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Create Post</title>
+    @endsection
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">Create Post</h1>
 
@@ -15,6 +18,8 @@
                 <input type="file" name="post_image" class="form-control-file" 
                 id="post_image">
             </div>
+
+            
 
             <div class="form-group">
                 <textarea name="body" id="summernote" class="form-control" cols="30" rows="10"></textarea>

@@ -15,19 +15,30 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 #Shop page
-Route::get('/', [App\Http\Controllers\HomeController::class, 'shop'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'blog'])->name('home');
 #Blog page
-Route::get('/blog', [App\Http\Controllers\HomeController::class, 'blog'])->name('blogs');
+// Route::get('/blog', [App\Http\Controllers\HomeController::class, 'blog'])->name('blogs');
+
+#Post page
+Route::get('/blog/post/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('post.show');
+#Categories page
+Route::get('/blog/categories/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
+#Tags page
+Route::get('/blog/tags/{tag}', [App\Http\Controllers\TagController::class, 'show'])->name('tags.show');
+#search
+Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+#resume
+Route::get('/resume', [App\Http\Controllers\HomeController::class, 'resume'])->name('resume');
 
 #ADMIN
 Route::middleware('auth')->group(function()
 {
-    #Post page
-    Route::get('/blog/post/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('post');
-    
-    #Dasboard
+        
+    #Admin welcome page
     Route::get('/admin', [App\Http\Controllers\AdminsController::class, 'index'])->name('admin.index');
-    
+    #Dasboard
+    Route::get('/admin/dashboard', [App\Http\Controllers\AdminsController::class, 'show'])->name('dashboard.show');
+
     #CRUD post
     Route::get('/admin/posts', [App\Http\Controllers\PostController::class, 'index'])->name('post.index');
     Route::get('/admin/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('post.create');
@@ -77,4 +88,17 @@ Route::middleware('auth')->group(function()
     Route::patch('/admin/comments/replies/{id}/update', [App\Http\Controllers\CommentReplyController::class, 'update'])->name('replies.update.status');
     Route::delete('/admin/comments/replies/{id}/delete', [App\Http\Controllers\CommentReplyController::class, 'delete'])->name('comment.reply.delete');
 
+    #categories
+    Route::get('/admin/categories', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/admin/categories', [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/admin/categories/{category}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/admin/categories/{category}/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/admin/categories/{category}/delete', [App\Http\Controllers\CategoryController::class, 'delete'])->name('categories.delete');
+
+    #tags
+    Route::get('/admin/tags', [App\Http\Controllers\TagController::class, 'index'])->name('tags.index');
+    Route::post('/admin/tags', [App\Http\Controllers\TagController::class, 'store'])->name('tags.store');
+    Route::get('/admin/tags/{tag}/edit', [App\Http\Controllers\TagController::class, 'edit'])->name('tags.edit');
+    Route::put('/admin/tags/{tag}/update', [App\Http\Controllers\TagController::class, 'update'])->name('tags.update');
+    Route::delete('/admin/tags/{tag}/delete', [App\Http\Controllers\TagController::class, 'delete'])->name('tags.delete');
 });

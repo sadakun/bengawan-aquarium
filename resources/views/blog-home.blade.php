@@ -1,103 +1,66 @@
 <x-home-master>
+@section('titles')
+<title>Sadaku - Blog</title>
+@endsection
+
 @section('content')
-
-<!-- Blog Entries Column -->
-<div class="col-md-8">
-
-    <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-    </h1>
-
-    <!-- Blog Post -->
+<div class="row tm-row">
+    
     @foreach($posts as $post)
-    <div class="card mb-4">
-        <img class="card-img-top" src="{{$post->post_image}}" alt="Card image cap">
-        
-        <div class="card-body">
-            <h2 class="card-title">{{$post->title}}</h2>
-            <p class="card-text">{{Str::limit($post->body, '200', '...')}}</p>
-            <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr;</a>
+    <article class="col-12 col-md-6 tm-post">
+        <hr class="tm-hr-primary">
+        <a href="{{route('post.show',$post->slug)}}" class="effect-lily tm-post-link tm-pt-20">
+            <div class="tm-post-link-inner">
+                <img src="{{$post->post_image}}" alt="Image" class="img-fluid">
+            </div>
+            <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{$post->title}}</h2>
+        </a>                    
+        <p class="tm-pt-30">
+        {!! Str::limit($post->body, '100', '...') !!}
+        </p>
+        <div class="row d-flex justify-content-between">
+            <div class="col-7">
+                @foreach($post->tags as $tag)
+                <span class="tm-color-primary"><a href="{{route('tags.show', $tag->slug)}}">{{$tag->name}}, </a></span>
+                @endforeach
+            </div>
+            <div class="col-5">
+                <span class="tm-color-primary ml-custom">{{$post->created_at->format('M d, Y')}}</span>
+            </div>
         </div>
-        
-        <div class="card-footer text-muted">
-            Posted on {{$post->created_at->format('d M Y').", ".$post->created_at->diffForHumans()}} by
-            <a href="#">{{$post->user->name}}</a>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <span>{{$post->comments()->count()}} comments</span>
+            <span>by <a href="#">{{$post->user->name}}</a></span>
         </div>
-    </div>
+    </article>
     @endforeach
-
-    <!-- Pagination -->
-    <ul class="pagination justify-content-center mb-4">
-        <li class="page-item">
-            <a class="page-link" href="#">&larr; Older</a>
-        </li>
-        <li class="page-item disabled">
-            <a class="page-link" href="#">Newer &rarr;</a>
-        </li>
-    </ul>
-
 </div>
 
-<!-- Sidebar Widgets Column -->
-<div class="col-md-4">
-
-    <!-- Search Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Search</h5>
-        <div class="card-body">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
-            </div>
-        </div>
+<div class="row tm-row tm-mt-100 tm-mb-75">
+    <div class="tm-prev-next-wrapper">
+        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+        <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
     </div>
-
-    <!-- Categories Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Categories</h5>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#">Web Design</a>
-                    </li>
-                    <li>
-                        <a href="#">HTML</a>
-                    </li>
-                    <li>
-                        <a href="#">Freebies</a>
-                    </li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#">JavaScript</a>
-                    </li>
-                    <li>
-                        <a href="#">CSS</a>
-                    </li>
-                    <li>
-                        <a href="#">Tutorials</a>
-                    </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Side Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Side Widget</h5>
-        <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-        </div>
-    </div>
-
-</div>
-
+    <div class="tm-paging-wrapper">
+        <span class="d-inline-block mr-3">Page</span>
+        <nav class="tm-paging-nav d-inline-block">
+            <ul>
+                <li class="tm-paging-item active">
+                    <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+                </li>
+                <li class="tm-paging-item">
+                    <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
+                </li>
+                <li class="tm-paging-item">
+                    <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
+                </li>
+                <li class="tm-paging-item">
+                    <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                </li>
+            </ul>
+        </nav>
+    </div>                
+</div>    
 @endsection
 </x-blog-master>

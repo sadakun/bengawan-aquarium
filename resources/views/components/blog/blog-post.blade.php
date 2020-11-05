@@ -1,219 +1,136 @@
 <x-home-master>
-@section('content')
-
-<!-- Blog Entries Column -->
-<div class="col-md-8">
-
-    <!-- Title -->
-    <h1 class="mt-4">{{$post->title}}</h1>
-
-    <!-- Author -->
-    <p class="lead">
-    by
-    <a href="#">{{$post->user->name}}</a>
-    </p>
-
-    <hr>
-
-    <!-- Date/Time -->
-    <p>Posted on {{$post->created_at->format('d, M Y H:i')}}</p>
-
-    <hr>
-
-    <!-- Preview Image -->
-    <img class="img-fluid rounded" src="{{$post->post_image}}" alt="">
-
-    <hr>
-
-    <!-- Post Content -->
-    <p class="lead">{!! $post->body !!}</p>
-
-    <blockquote class="blockquote">
-    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-    <footer class="blockquote-footer">Someone famous in
-        <cite title="Source Title">Source Title</cite>
-    </footer>
-    </blockquote>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
-
-    <hr>
-
-    <!-- Comments Form Input-->
-    <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-            <form action="{{route('comments.store')}}" method="post">
-            @csrf
-                <input type="hidden" name="post_id" value="{{$post->id}}">
-                <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                <div class="form-group">
-                    <textarea name="body" class="form-control @error('body') is-invalid @enderror" rows="3"></textarea>
-                    @error('body')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                    @enderror
+    @section('titles')
+    <title></title>
+    @endsection
+    @section('content')
+    <div class="row tm-row">
+        <div class="col-12">
+            <hr class="tm-hr-primary tm-mb-55">
+            <!-- Video player 1422x800 -->
+            <a href="#" class="d-block tm-mb-40">
+                <figure>
+                    <img src="{{$post->post_image}}" alt="Image" class="mb-1 img-fluid">
+                </figure>
+            </a>
+        </div>
+    </div>
+    <div class="row tm-row">
+        <div class="col-lg-8 tm-post-col">
+            <div class="tm-post-full">                    
+                <div class="mb-4">
+                    <h2 class="pt-2 tm-color-primary tm-post-title">{{$post->title}}</h2>
+                    <p class="tm-mb-40">{{$post->created_at->format('M d, Y')}} posted by <a href="#">{{$post->user->name}}</a></p>
+                    <p>{!! $post->body !!}</p>
+                    <div class="d-flex justify-content-end tm-pt-45">
+                        @foreach($post->tags as $tag)
+                        <a href="{{route('tags.show', $tag->slug)}}" class="tm-color-primary ml-custom">{{$tag->name}},</a>
+                        @endforeach
+                    </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Single Comment -->
-    @if(count($comments) > 0)
-    @foreach($comments as $comment)
-    <div class="media mb-4">
-        <img width="80px" class="rounded img-fluid mr-3 d-block" src="{{$comment->user->avatar}}" alt="">
-        <div class="media-body">
-            <h5 class="mt-0">{{$comment->user->username}}</h5>
-            {{$comment->body}}
-
-            @if(count($comment->replies) > 0)
-            @foreach($comment->replies as $reply)
-            <!-- Comment with nested comments -->
-            <div class="media mt-5">
-                <img width="60px" class="rounded img-fluid mr-3 d-block" src="{{$comment->user->avatar}}" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">{{$reply->user->username}}</h5>
-                    {{$reply->body}}
-                </div>
-            </div>
-            
-            @endforeach
-            
-            @else
-            <br>
-            <small class="mt-3"><i>No one replied yet, be the first one to reply</i></small>
-            
-            @endif
-            <form class="form-group" method="post" action="{{route('comment.replies.store')}}">
-                @csrf
-                <div class="input-group mt-3">
-                    <div class="input-group-append">
-                        <button class="btn rounded btn-primary" type="submit">
-                        <i class="fas fa-chevron-right"></i>
-                        </button>
+                <!-- Comments -->
+                <div>
+                    <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                    <hr class="tm-hr-primary tm-mb-45">
+                    @if(count($comments) > 0)
+                    @foreach($comments as $comment)
+                    <div class="tm-comment tm-mb-45">
+                        <figure class="tm-comment-figure">
+                            <img src="{{$comment->user->avatar}}" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                            <figcaption class="tm-color-primary text-center">Mark Sonny</figcaption>
+                        </figure>
+                        <div>
+                            <p>{{$comment->body}}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="#" class="tm-color-primary">REPLY</a>
+                                <span class="tm-color-primary">{{$comment->created_at->format('M d, Y')}}</span>
+                            </div>                                                 
+                        </div>                                
                     </div>
-                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
+
+                    <!-- reply form -->
+                    @if(Auth::check())
+                    <form action="{{route('comment.replies.store')}}" class="mb-5 tm-comment-form" method="post">
+                        @csrf
+                        <div class="mb-4">
+                            <textarea class="form-control" name="body" rows="1"></textarea>
+                        </div>
+                        <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                        <input type="hidden" name="user_id" value="{{auth()->user()->id}}"> 
+                        <div class="text-right">
+                            <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                        </div>                                
+                    </form>
+                    @else
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="tm-color-primary">Login to reply</a>
+                    </div>
+                    @endif
+
+                    <!-- Nested Comment -->
+                    <div class="tm-comment-reply tm-mb-45">
+                        <hr>
+                        @foreach($comment->replies as $reply)
+                        <div class="tm-comment">
+                            <figure class="tm-comment-figure">
+                                <img src="{{$reply->user->avatar}}" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                <figcaption class="tm-color-primary text-center">Jewel Soft</figcaption>    
+                            </figure>
+                            <p>{{$reply->body}}</p>
+                        </div>                                
+                        <span class="d-block text-right tm-color-primary">{{$reply->created_at->format('M d, Y')}}</span>
+                        @endforeach
+                    </div>
+                    
+                    @endforeach
+                    @else
+                    <div class="col-md-12 text-center tm-color-gray">
+                        No Comment yet
+                    </div>
+                    @endif                      
+                </div>
+                @if(Auth::check())
+                <!-- Comment Input -->
+                <form method="post" action="{{route('comments.store')}}" class="mb-5 tm-comment-form" method="post">
+                    @csrf
+                    <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+                    <input type="hidden" name="post_id" value="{{$post->id}}">
                     <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                    <input type="textarea" name="body" class="form-control  border-0 small @error('body') is-invalid @enderror" placeholder="Reply" rows="1">
-                    @error('body')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <div class="mb-4">
+                        <textarea class="form-control" name="body" rows="6"></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                    </div>                                
+                </form>  
+                @else
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="tm-color-primary">Login to comment</a>
                 </div>
-            </form>
-        </div>
-    </div>
-    @endforeach
-    @else
-    <h1>No Comments yet</h1>
-    @endif
-
-    <!-- Comment with nested comments -->
-    
-    <!-- <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-            <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-
-            <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-
-        </div>
-    </div> -->
-
-    <!-- Pagination -->
-    <ul class="pagination justify-content-center mb-4">
-        <li class="page-item">
-            <a class="page-link" href="#">&larr; Older</a>
-        </li>
-        <li class="page-item disabled">
-            <a class="page-link" href="#">Newer &rarr;</a>
-        </li>
-    </ul>
-
-</div>
-
-<!-- Sidebar Widgets Column -->
-<div class="col-md-4">
-
-    <!-- Search Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Search</h5>
-        <div class="card-body">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
+                @endif
             </div>
         </div>
+        <aside class="col-lg-4 tm-aside-col">
+            <div class="tm-post-sidebar">
+                <h2 class="mb-2 tm-post-title tm-color-primary">Categories</h2>
+                <hr class="mb-3 tm-hr-primary">
+                <ul class="tm-mb-75 pl-5 tm-category-list">
+                    @foreach($categories as $category)
+                    <li><a href="{{route('categories.show',$category->slug)}}" class="tm-color-primary">{{$category->name}} <span class="float-right sum-size">{{$category->posts()->count()}}</span> </a></li>
+                    @endforeach
+                </ul>
+                <h2 class="tm-mb-2 tm-post-title tm-color-primary">Related Posts</h2>
+                <hr class="mb-3 tm-hr-primary">
+                @foreach($related as $relate)
+                <a href="{{route('post.show',$relate->slug)}}" class="d-block tm-mb-40">
+                    <figure>
+                        <img src="{{$relate->post_image}}" alt="Image" class="mb-1 img-fluid">
+                        <figcaption class="tm-color-primary">{{$relate->title}}</figcaption>
+                    </figure>
+                </a>
+                @endforeach
+            </div>                    
+        </aside>
     </div>
-
-    <!-- Categories Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Categories</h5>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#">Web Design</a>
-                    </li>
-                    <li>
-                        <a href="#">HTML</a>
-                    </li>
-                    <li>
-                        <a href="#">Freebies</a>
-                    </li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">Tutorials</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Side Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Side Widget</h5>
-        <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-        </div>
-    </div>
-
-</div>
-    
-@endsection
+    @endsection
 </x-home-master>

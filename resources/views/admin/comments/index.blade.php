@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Comments</title>
+    @endsection
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">All Comments</h1>
         <!-- option 1 -->

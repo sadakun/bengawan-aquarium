@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Comments</title>
+    @endsection
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">All Comments</h1>
         <!-- option 1 -->
@@ -81,7 +84,7 @@
                         @endif
                       </td>
                       <td>
-                        <a href="{{route('post', $comment->post->id)}}" class="btn btn-circle btn-info btn-sm">
+                        <a href="{{route('post.show', $comment->post->slug)}}" class="btn btn-circle btn-info btn-sm">
                           <i class="fas fa-search"></i>
                         </a>
                         <form method="post" action="{{route('comments.delete',$comment->id)}}" ectype="multipart/form-data">

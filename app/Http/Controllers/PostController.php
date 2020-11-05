@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -13,10 +15,19 @@ class PostController extends Controller
     {
         $post = Post::findBySlug($slug);
         $comments = $post->comments()->where('isActive',1)->get();
+        $categories = Category::all();
+        $related = Post::whereHas('tags', function ($q) use ($post) {
+            return $q->whereIn('name', $post->tags->pluck('name')); 
+        })->where('id', '!=', $post->id)->get();
+        
+
         return view('components.blog.blog-post', [
             'post'=>$post,
             'comments'=>$comments,
+            'categories'=>$categories,
+            'related'=>$related,
             ]);
+        // return dd($related);
     }
 
     ##Admin Post
@@ -25,7 +36,13 @@ class PostController extends Controller
     {
         // $posts = auth()->user()->posts()->paginate(5);
         $posts = Post::all();
-        return view('admin.posts.index', ['posts'=>$posts]);
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.index', [
+            'posts'=>$posts,
+            'categories'=>$categories,
+            'tags'=>$tags,
+            ]);
     }
 
     ##Create
@@ -45,7 +62,8 @@ class PostController extends Controller
         $inputs= request()->validate([
             'title'=> 'required|max:255',
             'post_image'=>'file',
-            'body'=>'required'
+            'body'=>'required',
+            'category_id'=>'required',
         ]);
 
         // Condition to move save image file to folder images
@@ -55,12 +73,12 @@ class PostController extends Controller
         }
 
         // Condition to create, it must authetication user
-        auth()->user()->posts()->create($inputs);
-
+        $post = auth()->user()->posts()->create($inputs);
+        $post->tags()->sync(request()->tags);
         // Alert that shows after submit data
         session()->flash('post-created', $inputs['title']. ' '. 'post was created');
         return redirect()->route('post.index');
-        // dd(request()->all());
+        // return dd($inputs);
     }
 
     ##Edit
@@ -73,7 +91,13 @@ class PostController extends Controller
             return view('admin.posts.edit', ['post'=>$post]);
         }*/
         $this->authorize('view', $post);
-        return view('admin.posts.edit', ['post'=>$post]);
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.edit', [
+            'post'=>$post,
+            'categories'=>$categories,
+            'tags'=>$tags,
+            ]);
     }
 
     #Update edited post data
@@ -96,6 +120,7 @@ class PostController extends Controller
 
         $this->authorize('update', $post);
         $post->save();
+        $post->tags()->sync(request()->tags);
 
         session()->flash('post-updated', $post['title']. ' '. 'was updated');
 

@@ -28,8 +28,8 @@ class HomeController extends Controller
         return view('blog-home', ['posts'=>$posts]);
     }
 
-    public function shop()
+    public function resume()
     {
-        return view('shop-home');
+        return view('resume');
     }
 }

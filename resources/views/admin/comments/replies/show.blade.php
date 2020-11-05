@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Replies</title>
+    @endsection
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">All Replies</h1>
         <!-- option 1 -->

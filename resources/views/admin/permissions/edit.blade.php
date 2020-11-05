@@ -1,4 +1,7 @@
 <x-admin-master>
+    @section('title')
+    <title>Sadakun - Edit Permissions</title>
+    @endsection
     @section('content')
         
         <h1 class="h3 mb-4 text-gray-800">Permission Edit</h1>
