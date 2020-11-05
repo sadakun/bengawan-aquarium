@@ -4,7 +4,7 @@
     @endsection
 
     @section('styles')
-    <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
     @endsection
 
     @section('content')
@@ -64,7 +64,7 @@
         
     @endsection
     @section('scripts')
-    <script src="{{asset('vendor/bootstrap/js/bootstrap-select.min.js')}}"></script>
+    <script src="/vendor/bootstrap/js/bootstrap-select.min.js"></script>
     <script type="text/javascript">
         $(".selectpicker").selectpicker().val({!! json_encode($post->tags()->allRelatedIds()) !!}).trigger('change');
     </script>

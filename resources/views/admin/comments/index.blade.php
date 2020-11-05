@@ -34,7 +34,6 @@
                       <th>Body</th>
                       <th>Email</th>
                       <th>Created date</th>
-                      <th>Updated date</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -47,7 +46,6 @@
                       <th>Body</th>
                       <th>Email</th>
                       <th>Created date</th>
-                      <th>Updated date</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -61,7 +59,6 @@
                       <td>{{$comment->body}}</td>
                       <td>{{$comment->user->email}}</td>
                       <td>{{$comment->created_at->diffForHumans()}}</td>
-                      <td>{{$comment->updated_at->diffForHumans()}}</td>
                       <td>
                         @if($comment->isActive == 1)
                           <form method="post" action="{{route('comments.update.status',$comment->id)}}">
@@ -87,7 +84,7 @@
                         <a href="{{route('comment.replies.show', $comment->id)}}" class="btn btn-circle btn-primary btn-sm">
                           <i class="fas fa-comment-dots"></i>
                         </a>
-                        <a href="{{route('post', $comment->post->id)}}" class="btn btn-circle btn-info btn-sm">
+                        <a href="{{route('post.show', $comment->post->slug)}}" class="btn btn-circle btn-info btn-sm">
                           <i class="fas fa-search"></i>
                         </a>
                         <form method="post" action="{{route('comments.delete',$comment->id)}}" ectype="multipart/form-data">
@@ -110,10 +107,10 @@
 
     @section('scripts')
         <!-- Page level plugins -->
-        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+        <script src="/js/demo/datatables-demo.js"></script>
     @endsection
 </x-admin-master>

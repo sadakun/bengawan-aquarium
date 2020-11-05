@@ -34,7 +34,6 @@
                       <th>Body</th>
                       <th>Email</th>
                       <th>Created date</th>
-                      <th>Updated date</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -47,7 +46,6 @@
                       <th>Body</th>
                       <th>Email</th>
                       <th>Created date</th>
-                      <th>Updated date</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -61,7 +59,6 @@
                       <td>{{$reply->body}}</td>
                       <td>{{$reply->user->email}}</td>
                       <td>{{$reply->created_at->diffForHumans()}}</td>
-                      <td>{{$reply->updated_at->diffForHumans()}}</td>
                       <td>
                         @if($reply->isActive == 1)
                           <form method="post" action="{{route('replies.update.status',$reply->id)}}">
@@ -84,7 +81,7 @@
                         @endif
                       </td>
                       <td>
-                        <a href="{{route('post',$reply->comment->post->id)}}" class="btn btn-circle btn-info btn-sm">
+                        <a href="{{route('post.show',$reply->comment->post->slug)}}" class="btn btn-circle btn-info btn-sm">
                           <i class="fas fa-search"></i>
                         </a>
                         <form method="post" action="{{route('comment.reply.delete',$reply->id)}}" ectype="multipart/form-data">
@@ -107,10 +104,10 @@
 
     @section('scripts')
         <!-- Page level plugins -->
-        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+        <script src="/js/demo/datatables-demo.js"></script>
     @endsection
 </x-admin-master>

@@ -3,7 +3,7 @@
     <title>Sadakun - Posts</title>
     @endsection
     @section('styles')
-    <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" href="/css/bootstrap-select.min.css">
     @endsection
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">All Posts</h1>
@@ -156,11 +156,11 @@
 
     @section('scripts')
         <!-- Page level plugins -->
-        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-        <script src="{{asset('vendor/bootstrap/js/bootstrap-select.min.js')}}"></script>
+        <script src="/js/demo/datatables-demo.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap-select.min.js"></script>
     @endsection
 </x-admin-master>

@@ -4,13 +4,13 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@yield('titles')
-	<link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+	<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-  <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('css/templatemo-xtra-blog.css')}}" rel="stylesheet">
-  @yield('styles')
-  <!-- summernote plugin css -->
-  <x-summernote-jquery-and-bootstrap></x-summernote-jquery-and-bootstrap>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/templatemo-xtra-blog.css" rel="stylesheet">
+    @yield('styles')
+    <!-- summernote plugin css -->
+    <x-summernote-jquery-and-bootstrap></x-summernote-jquery-and-bootstrap>
 </head>
 <body>
 	<header class="tm-header" id="tm-header">
@@ -39,8 +39,8 @@
             <x-blog.footer></x-blog.footer>
         </main>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/templatemo-script.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/templatemo-script.js"></script>
     <x-summernote-css-and-js></x-summernote-css-and-js>
 </body>
 </html>

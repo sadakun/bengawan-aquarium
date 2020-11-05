@@ -4,7 +4,7 @@
 @endsection
 @section('styles')
 <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
-<link href="{{asset('css/resume.css')}}" rel="stylesheet">
+<link href="/css/resume.css" rel="stylesheet">
 @endsection
 
 @section('content')
