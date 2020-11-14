@@ -25,6 +25,8 @@ Route::get('/blog/post/{post}', [App\Http\Controllers\PostController::class, 'sh
 Route::get('/blog/categories/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
 #Tags page
 Route::get('/blog/tags/{tag}', [App\Http\Controllers\TagController::class, 'show'])->name('tags.show');
+#Author page
+Route::get('/blog/author/{author}', [App\Http\Controllers\UserController::class, 'author'])->name('author.show');
 #search
 Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 #resume
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function()
     Route::get('/admin', [App\Http\Controllers\AdminsController::class, 'index'])->name('admin.index');
     #Dasboard
     Route::get('/admin/dashboard', [App\Http\Controllers\AdminsController::class, 'show'])->name('dashboard.show');
+    Route::get('/admin/my-dashboard', [App\Http\Controllers\AdminsController::class, 'userDashboard'])->name('dashboard.user');
+    // Route::get('/admin/dashboard/test', [App\Http\Controllers\AdminsController::class, 'getTotalPostCreatedByMonth'])->name('dashboard.chartTrendingPost');
 
     #CRUD post
     Route::get('/admin/posts', [App\Http\Controllers\PostController::class, 'index'])->name('post.index');

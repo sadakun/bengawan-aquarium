@@ -75,7 +75,7 @@ class User extends Authenticatable
             {
                 return $value;
             }
-        return asset('' . $value);
+        return asset('/images/avatar/' . $value);
     }
 
     public function posts()

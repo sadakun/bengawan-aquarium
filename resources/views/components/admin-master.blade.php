@@ -109,10 +109,9 @@
             </li> -->
 
             <!-- Nav Item - Alerts -->
-            <x-admin.topbar.nav-alerts></x-admin.topbar.nav-alerts>
+            
 
             <!-- Nav Item - Messages -->
-            <x-admin.topbar.nav-messages></x-admin.topbar.nav-messages>
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -163,7 +162,6 @@
 
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.js"></script>
-
   @yield('scripts')
  <!-- summernote css/js -->
   <x-summernote-css-and-js></x-summernote-css-and-js>

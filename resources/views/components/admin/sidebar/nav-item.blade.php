@@ -5,6 +5,14 @@
 </div>
 <!-- Dashboard view -->
 <li class="nav-item">
+    <a class="nav-link" href="{{route('dashboard.user')}}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>My Dashboard</span></a>
+</li>
+
+@if(auth()->user()->userHasRole('Admin'))
+<!-- Dashboard view -->
+<li class="nav-item">
     <a class="nav-link" href="{{route('dashboard.show')}}">
     <i class="fas fa-fw fa-tachometer-alt"></i>
     <span>Dashboard</span></a>
@@ -63,6 +71,21 @@
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
+<!-- Comments view -->
+<li class="nav-item">
+    <a class="nav-link" href="{{route('comments.index')}}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>Comments</span></a>
+</li>
+@endif
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Interface
+</div>
+
 <!-- Posts view -->
 <li class="nav-item">
     <a class="nav-link" href="{{route('post.index')}}">
@@ -70,12 +93,4 @@
     <span>Posts</span></a>
 </li>
 
-<!-- Divider -->
-<hr class="sidebar-divider my-0">
 
-<!-- Comments view -->
-<li class="nav-item">
-    <a class="nav-link" href="{{route('comments.index')}}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
-    <span>Comments</span></a>
-</li>

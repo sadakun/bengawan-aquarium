@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function blog()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(1);
         return view('blog-home', ['posts'=>$posts]);
     }
 

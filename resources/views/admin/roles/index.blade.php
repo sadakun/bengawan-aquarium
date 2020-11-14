@@ -3,16 +3,17 @@
     <title>Sadakun - Roles</title>
     @endsection
     @section('content')
-        
-        <h1 class="h3 mb-4 text-gray-800">Roles</h1>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">All Roles</h1>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#roleModal"><i class="fas fa-download fa-sm text-white-50"></i> Create New Role</a>
+        </div>
         @if(session()->has('role-deleted'))
         <div class="alert alert-danger">{{session('role-deleted')}}</div>
         @elseif(session()->has('role-updated'))
         <div class="alert alert-success">{{session('role-updated')}}</div>
         @endif
         <div class="row">
-            <div class="col-sm-9">
-            <a href="#" class="btn btn-primary btn-circle ml-2 float-right" data-toggle="modal" data-target="#roleModal"><i class="fas fa-plus"></i></a>
+            <div class="col-sm-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>

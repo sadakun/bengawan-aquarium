@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\Post;
 
 class UserController extends Controller
 {
@@ -36,7 +39,11 @@ class UserController extends Controller
 
         if(request('avatar'))
         {
-            $inputs['avatar'] = request('avatar')->store('images');
+            $image = request()->file('avatar');
+            $inputs['avatar'] = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/avatar');
+            $image->move($destinationPath, $inputs['avatar']);
+            // $inputs['avatar'] = request('avatar')->store('images');
         }
 
         $user->update($inputs);
@@ -62,5 +69,18 @@ class UserController extends Controller
         $user->delete();
         session()->flash('user-delete', 'user has beed deleted');
         return back();
+    }
+
+    public function author($id)
+    {
+        $categories = Category::all();
+        $tags = Tag::all();
+        $authors = User::find($id);
+        return view('components.blog.posts-author',[
+            'categories'=>$categories,
+            'tags'=>$tags,
+            'authors'=>$authors,
+        ]);
+        // return dd($authors->posts());
     }
 }

@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="/css/bootstrap-select.min.css">
     @endsection
     @section('content')
-        <h1 class="h3 mb-4 text-gray-800">All Posts</h1>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">All Posts</h1>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#postModal"><i class="fas fa-download fa-sm text-white-50"></i> Create New Post</a>
+      </div>
         <!-- option 1 -->
         <!-- @if(Session::has('message'))
         <div class="alert alert-danger">{{Session::get('message')}}</div>
@@ -24,7 +27,6 @@
         <!-- DataTales Example -->
         <div class="row">
           <div class="col-sm-12">
-            <a href="#" class="btn btn-primary btn-circle ml-2 float-right" data-toggle="modal" data-target="#postModal"><i class="fas fa-plus"></i></a>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>

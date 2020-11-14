@@ -3,7 +3,10 @@
     <title>Sadakun - Categories</title>
     @endsection
     @section('content')
-        <h1 class="h3 mb-4 text-gray-800">CATEGORIES</h1>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">All Categories</h1>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#categoryModal"><i class="fas fa-download fa-sm text-white-50"></i> Create New Category</a>
+        </div>
         @if(session()->has('category-deleted'))
         <div class="alert alert-danger">{{session('category-deleted')}}</div>
         @elseif(session()->has('category-updated'))
@@ -11,7 +14,6 @@
         @endif
         <div class="row">
             <div class="col-sm-12">
-                <a href="#" class="btn btn-primary btn-circle ml-2 float-right" data-toggle="modal" data-target="#categoryModal"><i class="fas fa-plus"></i></a>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">

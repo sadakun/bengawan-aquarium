@@ -35,7 +35,11 @@ class PostController extends Controller
     public function index()
     {
         // $posts = auth()->user()->posts()->paginate(5);
-        $posts = Post::all();
+        if(auth()->user()->roles->pluck( 'name' )->contains( 'Admin' )) {
+            $posts = Post::all();
+        } else if(auth()->user()->roles->pluck( 'name' )->contains( 'Author' )) {
+            $posts = auth()->user()->posts()->get();
+        }
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.index', [
@@ -67,9 +71,17 @@ class PostController extends Controller
         ]);
 
         // Condition to move save image file to folder images
+        // if(request('post_image'))
+        // {
+        //     $inputs['post_image'] = request('post_image')->store('images');
+        // }
+
         if(request('post_image'))
         {
-            $inputs['post_image'] = request('post_image')->store('images');
+            $image = request()->file('post_image');
+            $inputs['post_image'] = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $inputs['post_image']);
         }
 
         // Condition to create, it must authetication user
@@ -85,12 +97,13 @@ class PostController extends Controller
     #Show edit page
     public function edit(Post $post)
     {
+        $this->authorize('view', $post);
         #another way to use policies
         /*if(auth()->user()->can('view', $post))
         {
             return view('admin.posts.edit', ['post'=>$post]);
         }*/
-        $this->authorize('view', $post);
+        // $this->authorize('view', $post);
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.edit', [
@@ -103,6 +116,7 @@ class PostController extends Controller
     #Update edited post data
     public function update(Post $post)
     {
+
         $inputs=request()->validate([
             'title'=> 'required|max:255',
             'post_image'=>'file',
@@ -111,9 +125,18 @@ class PostController extends Controller
 
         if(request('post_image'))
         {
-            $inputs['post_image'] = request('post_image')->store('images');
+            $image = request()->file('post_image');
+            $inputs['post_image'] = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $inputs['post_image']);
             $post->post_image = $inputs['post_image'];
         }
+
+        // if(request('post_image'))
+        // {
+        //     $inputs['post_image'] = request('post_image')->store('images');
+        //     $post->post_image = $inputs['post_image'];
+        // }
 
         $post->title = $inputs['title'];
         $post->body = $inputs['body'];

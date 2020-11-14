@@ -19,7 +19,7 @@
             <div class="tm-post-full">                    
                 <div class="mb-4">
                     <h2 class="pt-2 tm-color-primary tm-post-title">{{$post->title}}</h2>
-                    <p class="tm-mb-40">{{$post->created_at->format('M d, Y')}} posted by <a href="#">{{$post->user->name}}</a></p>
+                    <p class="tm-mb-40">{{$post->created_at->format('M d, Y')}} posted by <a href="{{route('author.show',$post->user->id)}}">{{$post->user->name}}</a></p>
                     <p>{!! $post->body !!}</p>
                     <div class="d-flex justify-content-end tm-pt-45">
                         @foreach($post->tags as $tag)

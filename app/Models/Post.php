@@ -60,7 +60,7 @@ class Post extends Model
             {
                 return $value;
             }
-        return asset('' . $value);
+        return asset('/images/' . $value);
     }
 
     public function comments()
@@ -68,7 +68,7 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function categories()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
